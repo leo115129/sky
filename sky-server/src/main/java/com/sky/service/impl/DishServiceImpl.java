@@ -13,6 +13,7 @@ import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
+import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,6 +35,8 @@ public class DishServiceImpl implements DishService {
     private DishMapper dishMapper;
     @Autowired
     private DishFlavorMapper dishFlavorMapper;
+    @Autowired
+    private SetmealMapper setmealMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
     /**
@@ -124,4 +128,48 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavors);
         }
     }
+
+    /**
+     * 菜品起售停售
+     * @param status
+     * @param id
+     */
+    @Override
+    public void onSaleor(Integer status, Long id) {
+        Dish dish=Dish.builder()
+                .id(id)
+                .status(status)
+                .build();
+        dishMapper.update(dish);
+        if(status==StatusConstant.DISABLE){
+            List<Long> ids=new ArrayList<>();
+            ids.add(id);
+            List<Long> setmealIds= setmealDishMapper.getSetmealDishIds(ids);
+            if(setmealIds!=null&&setmealIds.size()>0){
+                for (Long setmealId : setmealIds) {
+                    Setmeal setmeal=Setmeal.builder()
+                            .id(setmealId)
+                            .status(StatusConstant.DISABLE)
+                            .build();
+                    setmealMapper.update(setmeal);
+                }
+            }
+        }
+    }
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> getList(Long categoryId) {
+        Dish dish=Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE)
+                .build();
+        return dishMapper.getlist(dish);
+    }
+
+
 }

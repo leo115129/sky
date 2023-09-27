@@ -12,3 +12,8 @@ sky:
     access-key-secret: QxRfEvRxvSa6yeGhSqpLhQtQL4qIg5
     endpoint: oss-cn-hangzhou.aliyuncs.com
     bucket-name: leo115
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 0
