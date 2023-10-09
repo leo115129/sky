@@ -20,3 +20,7 @@ sky:
   wechat:
     appid: wx56ed56e360bd73d8
     secret: 25e7aed65b3064fdb5643f24ca29f801
+  shop:
+    address: 湖南省株洲市天元区泰山西路88号
+  baidu:
+    ak: MGYffop8zmTRXvXzTuZyjj3WtfGNHREs
