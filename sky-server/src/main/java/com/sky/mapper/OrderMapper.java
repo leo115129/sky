@@ -46,5 +46,12 @@ public interface OrderMapper {
     @Select("select * from orders where id=#{id}")
     Orders getById(Long id);
 
+    @Select("select count(*) from orders where status=3")
+    Integer getConfirmedNumber();
 
+    @Select("select count(*) from orders where status=4")
+    Integer getDeliveryInProgressNumber();
+
+    @Select("select count(*) from orders where status=2")
+    Integer getToBeConfirmed();
 }
