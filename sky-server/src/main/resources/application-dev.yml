@@ -20,6 +20,7 @@ sky:
   wechat:
     appid: wx56ed56e360bd73d8
     secret: 25e7aed65b3064fdb5643f24ca29f801
+    notify-url:  https://3f7c12d1.r18.cpolar.top/notify/paySuccess
   shop:
     address: 湖南省株洲市天元区泰山西路88号
   baidu:

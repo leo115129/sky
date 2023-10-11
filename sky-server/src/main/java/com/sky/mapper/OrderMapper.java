@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import com.github.pagehelper.Page;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Mapper
 public interface OrderMapper {
 
@@ -54,4 +57,7 @@ public interface OrderMapper {
 
     @Select("select count(*) from orders where status=2")
     Integer getToBeConfirmed();
+
+    @Select("select * from orders where status=#{status} and order_time<#{time}")
+    List<Orders> getByStatusAndOrderTime(Integer status, LocalDateTime time);
 }
